@@ -11,6 +11,13 @@ export const ACTIONS = {
   EVALUATE: "evaluate",
 };
 
+/**
+ * The reducer function handles different actions to update the state in a calculator application.
+ * @param state - The `state` parameter represents the current state of the reducer. It is an object
+ * that contains the following properties:
+ * @returns The function `reducer` returns the updated state object based on the given action type and
+ * payload.
+ */
 function reducer(state, { type, payload }) {
   switch (type) {
     case ACTIONS.ADD_DIGIT:
@@ -25,7 +32,7 @@ function reducer(state, { type, payload }) {
         return state;
       return {
         ...state,
-        currentOperand: `${state.currentOperand||""} ${payload.digit}`,
+        currentOperand: `${state.currentOperand||""}${payload.digit}`,
       };
       
 
@@ -53,7 +60,7 @@ function reducer(state, { type, payload }) {
       
 
     case ACTIONS.EVALUATE:
-      if (state.currentOperand === "") return state;
+      if (state.currentOperand === "") return {...state, previousOperand: null};
       return {
         ...state,
         currentOperand: evaluate(state),
@@ -67,6 +74,11 @@ function reducer(state, { type, payload }) {
   }
 }
 
+/**
+ * The evaluate function takes in an object with currentOperand, previousOperand, and operation
+ * properties, performs the specified operation on the operands, and returns the result.
+ * @returns the evaluated result of the given expression.
+ */
 function evaluate({currentOperand, previousOperand, operation}){
   const previous = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
